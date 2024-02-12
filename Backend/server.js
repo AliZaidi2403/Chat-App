@@ -8,6 +8,7 @@ const chatRoutes = require("././routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const app = express();
 const cors = require("cors");
+const path = require("path");
 app.use(cors());
 dotenv.config();
 connectDB();
@@ -26,6 +27,11 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 app.use(notFound);
 app.use(errorHandler);
+//-----------------Deployement-----------------------
+
+const __dirname1 = path.resolve();
+app.use(express.static(path.join(__dirname1, "/frontend/build")));
+//--------------------------------------------------------------
 
 const port = process.env.PORT || 5000;
 const server = app.listen(port, console.log(`Server runninng at port ${port}`));
